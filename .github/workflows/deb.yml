@@ -17,7 +17,7 @@ jobs:
           echo "deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates universe" | sudo tee -a /etc/apt/sources.list
           sudo rm /etc/apt/sources.list.d/bazel.list
           sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends debhelper devscripts python3-gnupg python3-pylxd python3-toml
+          sudo apt-get install --yes --no-install-recommends debhelper devscripts python3-gnupg python3-lazr.restfulclient python3-pylxd python3-toml
           sudo apt-get build-dep --yes snapcraft
           wget http://mirrors.kernel.org/ubuntu/pool/main/p/python-setuptools/python3-{pkg-resources,setuptools}_41.1.0-1_all.deb
           sudo dpkg -i python3-{pkg-resources,setuptools}_41.1.0-1_all.deb
