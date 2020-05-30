@@ -14,10 +14,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: |
-          echo "deb-src http://archive.ubuntu.com/ubuntu/ focal universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates universe" | sudo tee -a /etc/apt/sources.list
           sudo rm /etc/apt/sources.list.d/bazel.list
           sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends debhelper devscripts
+          sudo apt-get install --yes --no-install-recommends debhelper devscripts python3-pylxd python3-toml
           sudo apt-get build-dep --yes snapcraft
       - name: Add debian/changelog entry
         if: startsWith(github.ref, 'refs/tags/v')
