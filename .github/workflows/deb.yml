@@ -15,7 +15,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get install --yes --no-install-recommends debhelper devscripts
-          echo "deb-src http://archive.ubuntu.com/ubuntu/ focal universe" | sudo tee /etc/apt/sources.list
+          echo "deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates universe" | sudo tee /etc/apt/sources.list
           sudo rm /etc/apt/sources.list.d/bazel.list
           sudo apt-get update
           sudo apt-get build-dep --yes snapcraft
