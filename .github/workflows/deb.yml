@@ -1,9 +1,9 @@
-name: Build deb
+name: Build & Release Debian Package
 
 on:
   push:
-    branches:
-      - build-deb
+    tags:
+      - v*-deb
 
 jobs:
   build:
@@ -12,9 +12,26 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: sudo apt-get install -y debhelper
-      - run: dpkg-buildpackage -uc -us -b
-      - run: mv ../*.deb .
-      - uses: actions/upload-artifact@v2
+      - name: Build Package
+        run: dpkg-buildpackage -uc -us -b
+      - name: Move Package
+        run: mv ../snapcraft_*.deb snapcraft.deb
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Debian Packages
-          path: snapcraft*.deb
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: true
+      - name: Add Debian Package to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./snapcraft.deb
+          asset_name: snapcraft.deb
+          asset_content_type: application/vnd.debian.binary-package
