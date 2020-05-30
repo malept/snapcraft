@@ -13,7 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
-        run: sudo apt-get install --yes --no-install-recommends debhelper devscripts && sudo apt-get build-dep --yes snapcraft
+        run: |
+          sudo apt-get install --yes --no-install-recommends debhelper devscripts
+          echo "deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted" | sudo tee /etc/apt/sources.list
+          sudo apt-get update
+          sudo apt-get build-dep --yes snapcraft
       - run: echo ${{ github.ref }}
       - name: Add debian/changelog entry
         if: startsWith(github.ref, 'refs/tags/v')
