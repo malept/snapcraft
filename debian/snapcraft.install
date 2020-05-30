@@ -1,0 +1,4 @@
+/usr/bin/snapcraft
+/usr/bin/snapcraftctl
+/usr/lib/python*
+/usr/share/snapcraft
