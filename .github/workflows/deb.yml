@@ -17,7 +17,7 @@ jobs:
       - run: echo ${{ github.ref }}
       - name: Add debian/changelog entry
         if: startsWith(github.ref, 'refs/tags/v')
-        run: dch --newversion=${{ github.ref }} "Auto release"
+        run: dch --newversion=$(echo '${{ github.ref }}' | sed -e 's:refs/tags/v::g') "Auto release"
       - name: Build Package
         run: dpkg-buildpackage -uc -us -b
       - name: Move Package
