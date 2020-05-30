@@ -1,0 +1,17 @@
+name: Build deb
+
+on:
+  push:
+    branches:
+      - build-deb
+
+jobs:
+  update_release_draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: dpkg-buildpackage -uc -us -b
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Debian Packages
+          path: ../*.deb
