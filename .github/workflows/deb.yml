@@ -21,8 +21,9 @@ jobs:
           sudo apt-get build-dep --yes snapcraft
           wget http://mirrors.kernel.org/ubuntu/pool/main/p/python-setuptools/python3-{pkg-resources,setuptools}_41.1.0-1_all.deb
           wget http://mirrors.kernel.org/ubuntu/pool/universe/p/python-typing-extensions/python3-typing-extensions_3.7.4.2-1_all.deb
-          sudo dpkg -i python3-{{pkg-resources,setuptools}_41.1.0-1,typing-extensions_3.7.4.2-1}_all.deb
-          rm python3-{{pkg-resources,setuptools}_41.1.0-1,typing-extensions_3.7.4.2-1}_all.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/p/python-mypy-extensions/python3-mypy-extensions_0.4.3-1_all.deb
+          sudo dpkg -i python3-{{pkg-resources,setuptools}_41.1.0-1,typing-extensions_3.7.4.2-1,mypy-extensions_0.4.3-1}_all.deb
+          rm python3-{{pkg-resources,setuptools}_41.1.0-1,typing-extensions_3.7.4.2-1,mypy-extensions_0.4.3-1}_all.deb
       - name: Add debian/changelog entry
         if: startsWith(github.ref, 'refs/tags/v')
         run: dch --newversion=$(echo '${{ github.ref }}' | sed -e 's:refs/tags/v::g') "Auto release"
