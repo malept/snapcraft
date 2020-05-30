@@ -15,8 +15,8 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install --yes --no-install-recommends debhelper devscripts
       - name: Add debian/changelog entry
-        if: startsWith(github.ref, 'ref/tags/')
-        run: dch --newversion=$(echo "${{ github.ref }}" | sed -e "s:ref/tags/v::g") "Auto release"
+        if: startsWith(github.ref, 'v')
+        run: dch --newversion=${{ github.ref }} "Auto release"
       - name: Build Package
         run: dpkg-buildpackage -uc -us -b
       - name: Move Package
@@ -26,7 +26,7 @@ jobs:
           name: Debian Packages
           path: snapcraft.deb
       - name: Create Release
-        if: startsWith(github.ref, 'ref/tags/')
+        if: startsWith(github.ref, 'v')
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -37,7 +37,7 @@ jobs:
           draft: false
           prerelease: true
       - name: Add Debian Package to Release
-        if: startsWith(github.ref, 'ref/tags/')
+        if: startsWith(github.ref, 'v')
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
