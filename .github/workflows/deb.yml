@@ -13,7 +13,8 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install -y debhelper
       - run: dpkg-buildpackage -uc -us -b
+      - run: mv ../*.deb .
       - uses: actions/upload-artifact@v2
         with:
           name: Debian Packages
-          path: ../*.deb
+          path: snapcraft*.deb
