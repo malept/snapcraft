@@ -19,6 +19,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends debhelper devscripts python3-pylxd python3-toml
           sudo apt-get build-dep --yes snapcraft
+          wget http://mirrors.kernel.org/ubuntu/pool/main/p/python-setuptools/python3-{pkg-resources,setuptools}_41.1.0-1_all.deb
+          sudo dpkg -i python3-{pkg-resources,setuptools}_41.1.0-1_all.deb
+          rm python3-{pkg-resources,setuptools}_41.1.0-1_all.deb
       - name: Add debian/changelog entry
         if: startsWith(github.ref, 'refs/tags/v')
         run: dch --newversion=$(echo '${{ github.ref }}' | sed -e 's:refs/tags/v::g') "Auto release"
