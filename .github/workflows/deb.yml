@@ -15,7 +15,7 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install --yes --no-install-recommends debhelper devscripts
       - name: Add debian/changelog entry
-        run: dch --append --newversion=$(echo "${{ github.ref }}" | sed -e "s:^v")~nightly1 "Auto release"
+        run: dch --newversion=$(echo "${{ github.ref }}" | sed -e "s:^v")~nightly1 "Auto release"
       - name: Build Package
         run: dpkg-buildpackage -uc -us -b
       - name: Move Package
